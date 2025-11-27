@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>My Expense Tracker</title>
+<style>
+  body { font-family: Arial, sans-serif; background: #f5f5f5; padding: 20px; }
+  .container { max-width: 450px; margin: auto; background: white; padding: 20px;
+    border-radius: 12px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+  h2 { text-align: center; }
+  input, select, button {
+    width: 100%; padding: 10px; margin-top: 10px; border-radius: 8px;
+    border: 1px solid #ccc; font-size: 16px;
+  }
+  button { background: #4CAF50; color: white; font-weight: bold; cursor: pointer; }
+  .list { margin-top: 20px; background: #fafafa; padding: 10px; border-radius: 10px;
+    max-height: 250px; overflow-y: auto; }
+  .item { padding: 10px; background: #fff; border-radius: 8px; margin-bottom: 10px;
+    border: 1px solid #ddd; }
+  .total-box { margin-top: 20px; background: #e3ffe3; padding: 15px; border-radius: 10px;
+    text-align: center; font-size: 18px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h2>My Expense Tracker</h2>
+
+  <label>Date:</label>
+  <input type="date" id="date" />
+
+  <label>Description:</label>
+  <input type="text" id="desc" placeholder="Tea, Petrol, Shopping..." />
+
+  <label>Amount (₹):</label>
+  <input type="number" id="amount" />
+
+  <label>Category:</label>
+  <select id="category">
+    <option>Food</option>
+    <option>Travel</option>
+    <option>Shopping</option>
+    <option>Health</option>
+    <option>Bills</option>
+    <option>Other</option>
+  </select>
+
+  <button onclick="addItem()">Add Expense</button>
+
+  <div class="list" id="list"></div>
+
+  <div class="total-box" id="totalBox">Total: ₹0</div>
+</div>
+
+<script>
+let total = 0;
+
+function addItem() {
+  const date = document.getElementById('date').value;
+  const desc = document.getElementById('desc').value;
+  const amount = Number(document.getElementById('amount').value);
+  const category = document.getElementById('category').value;
+
+  if (!date || !desc || !amount) {
+    alert("Please fill all fields");
+    return;
+  }
+
+  const list = document.getElementById('list');
+  const div = document.createElement('div');
+  div.className = 'item';
+  div.innerHTML = `<b>${date}</b><br>${desc} - ₹${amount}<br><small>${category}</small>`;
+  list.appendChild(div);
+
+  total += amount;
+  document.getElementById('totalBox').innerText = `Total: ₹${total}`;
+
+  document.getElementById('desc').value = "";
+  document.getElementById('amount').value = "";
+}
+</script>
+</body>
+</html>
